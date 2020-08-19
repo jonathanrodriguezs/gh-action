@@ -48,18 +48,18 @@ jobs:
       - name: Test ${{ env.FILENAME }}
         run: windows/${{ env.FILENAME }}.exe
 
-    test-linux:
-      name: Test Windows
-      runs-on: ubuntu-latest
-      needs: [build]
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
+  test-linux:
+    name: Test Windows
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-        - name: Download artifact
-          uses: actions/download-artifact@v2
-          with:
-            name: linux
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: linux
 
-        - name: Test ${{ env.FILENAME }}
-          run: ./linux/${{ env.FILENAME }}
+      - name: Test ${{ env.FILENAME }}
+        run: ./linux/${{ env.FILENAME }}
