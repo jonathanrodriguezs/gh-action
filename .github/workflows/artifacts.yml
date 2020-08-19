@@ -17,7 +17,7 @@ jobs:
       - name: Build ${{ env.FILE_NAME }} for ubuntu-latest
         run: go build ${{ env.FILE_PATH }}
 
-      - name: Build ${{ env.FILENAME }} for windows-latest
+      - name: Build ${{ env.FILE_NAME }} for windows-latest
         run: GOOS=windows GOARCH=amd64 go build ${{ env.FILE_PATH }}
 
       - name: List files
@@ -27,13 +27,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: linux
-          path: ./${{ env.FILENAME }}
+          path: ./${{ env.FILE_NAME }}
 
       - name: Upload artifact for windows
         uses: actions/upload-artifact@v2
         with:
           name: windows
-          path: ./${{ env.FILENAME }}.exe
+          path: ./${{ env.FILE_NAME }}.exe
 
   test-windows:
     name: Test Windows
@@ -48,8 +48,8 @@ jobs:
         with:
           name: windows
 
-      - name: Test ${{ env.FILENAME }}
-        run: windows/${{ env.FILENAME }}.exe
+      - name: Test ${{ env.FILE_NAME }}
+        run: windows/${{ env.FILE_NAME }}.exe
 
   test-linux:
     name: Test Windows
@@ -64,5 +64,5 @@ jobs:
         with:
           name: linux
 
-      - name: Test ${{ env.FILENAME }}
-        run: ./linux/${{ env.FILENAME }}
+      - name: Test ${{ env.FILE_NAME }}
+        run: ./linux/${{ env.FILE_NAME }}
