@@ -20,6 +20,9 @@ jobs:
       - name: Build ${{ env.FILENAME }} for windows-latest
         run: GOOS=windows GOARCH=amd64 go build ${{ env.FILE_PATH }}
 
+      - name: List files
+        run: ls -al
+
       - name: Upload artifact for linux
         uses: actions/upload-artifact@v2
         with:
