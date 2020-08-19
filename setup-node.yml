@@ -12,4 +12,4 @@ jobs:
         uses: actions/setup-node@v2.1.1
         with:
           node-version: 10.15.3
-      - run: node resources/index.js
+      - run: node resources/hello.js

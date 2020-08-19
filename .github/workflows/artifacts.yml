@@ -1,0 +1,65 @@
+name: artifacts
+
+on: [push]
+
+env:
+  FILE_NAME: hello
+  FILE_PATH: resources/hello.go
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build ${{ env.FILE_NAME }} for ubuntu-latest
+        run: go build ${{ env.FILE_PATH }}
+
+      - name: Build ${{ env.FILENAME }} for windows-latest
+        run: GOOS=windows GOARCH=amd64 go build ${{ env.FILE_PATH }}
+
+      - name: Upload artifact for linux
+        uses: actions/upload-artifact@v2
+        with:
+          name: linux
+          path: ./${{ env.FILENAME }}
+
+      - name: Upload artifact for windows
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows
+          path: ./${{ env.FILENAME }}.exe
+
+  test-windows:
+    name: Test Windows
+    runs-on: windows-latest
+    needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: windows
+
+      - name: Test ${{ env.FILENAME }}
+        run: windows/${{ env.FILENAME }}.exe
+
+    test-linux:
+      name: Test Windows
+      runs-on: ubuntu-latest
+      needs: [build]
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Download artifact
+          uses: actions/download-artifact@v2
+          with:
+            name: linux
+
+        - name: Test ${{ env.FILENAME }}
+          run: ./linux/${{ env.FILENAME }}
