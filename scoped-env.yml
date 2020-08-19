@@ -5,6 +5,7 @@ env:
 
 jobs:
   print-env:
+    name: 'Set and print env variables on Ubuntu'
     runs-on: ubuntu-latest
     env:
       JOB_SECRET: 'secret-job'
