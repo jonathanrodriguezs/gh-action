@@ -35,6 +35,23 @@ jobs:
           name: windows
           path: ./${{ env.FILE_NAME }}.exe
 
+  test-linux:
+    name: Test Linux
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: linux
+          path: linux
+
+      - name: Test ${{ env.FILE_NAME }}
+        run: linux/${{ env.FILE_NAME }}
+
   test-windows:
     name: Test Windows
     runs-on: windows-latest
@@ -47,22 +64,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: windows
+          path: windows
 
       - name: Test ${{ env.FILE_NAME }}
         run: windows/${{ env.FILE_NAME }}.exe
-
-  test-linux:
-    name: Test Windows
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: linux
-
-      - name: Test ${{ env.FILE_NAME }}
-        run: ./linux/${{ env.FILE_NAME }}
