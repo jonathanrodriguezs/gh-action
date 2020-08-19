@@ -49,6 +49,9 @@ jobs:
           name: linux
           path: linux
 
+      - name: Make ${{ env.FILE_NAME }} executable
+        run: chmod +x linux/${{ env.FILE_NAME }}
+
       - name: Test ${{ env.FILE_NAME }}
         run: linux/${{ env.FILE_NAME }}
 
