@@ -1,0 +1,23 @@
+name: set env
+on: push
+env:
+  WORKSPACE_SECRET: 'secret-workspace'
+
+jobs:
+  print-env:
+    runs-on: ubuntu-latest
+    env:
+      JOB_SECRET: 'secret-job'
+    steps:
+      - name: 'Print env variables'
+        env:
+          STEP_SECRET: 'secret-step'
+        run: |
+          echo "- Accesign env variables from shell"
+          echo "$WORKSPACE_SECRET"
+          echo "$JOB_SECRET"
+          echo "$STEP_SECRET"
+          echo "- Acessing using env context"
+          echo "${{ env.WORKSPACE_SECRET }}"
+          echo "${{ env.JOB_SECRET }}"
+          echo "${{ env.STEP_SECRET }}"
